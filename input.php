@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+require 'validation.php';
+
 // スーパーグローバル変数 nameの値がkey valueの値がvalue
 // 連想配列
 // echo $_GET['name'];
@@ -22,8 +24,9 @@ echo '</pre>';
 
 // 画面遷移の判定
 $pageFlag = 0;
+$error = validatation($_POST);
 
-if (!empty($_POST['btn_confirm'])) {
+if (!empty($_POST['btn_confirm']) && empty($error)) {
   $pageFlag = 1;
 }
 
@@ -109,6 +112,13 @@ if (!isset($_SESSION['csrfToken'])) {
 }
 $token = $_SESSION['csrfToken'];
 ?>
+  <?php if (!empty($_POST['btn_confirm']) && !empty($error)) :?>
+  <ul>
+  <?php foreach ($error as $value) :?>
+  <li><?php echo $value ; ?></li>
+  <?php endforeach ;?>
+  </ul>
+  <?php endif ;?>
 
   <form method="POST" action="input.php">
   名前
