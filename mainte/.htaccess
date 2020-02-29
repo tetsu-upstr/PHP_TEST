@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "IDとパスワードを入力してください"
+AuthUserFile /opt/lampp/htdocs/PHP_TEST/mainte/.htpasswd
+require valid-user
