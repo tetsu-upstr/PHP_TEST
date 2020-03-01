@@ -91,6 +91,7 @@ if (!empty($_POST['btn_submit'])) {
   <input type="hidden" name="gender" value="<?php echo h($_POST['gender']); ?>">
   <input type="hidden" name="age" value="<?php echo h($_POST['age']); ?>">
   <input type="hidden" name="contact" value="<?php echo h($_POST['contact']); ?>">
+  <input type="hidden" name="caution" value="<?php echo h($_POST['caution']); ?>">
 
   <input type="hidden" name="csrf" value="<?php echo h($_POST['csrf']); ?>">
   </form>
@@ -100,6 +101,13 @@ if (!empty($_POST['btn_submit'])) {
 <!-- 送信完了画面 -->
 <?php if ($pageFlag === 2) : ?>
   <?php if ($_POST['csrf'] === $_SESSION['csrfToken']) : ?>
+
+  <?php require 'mainte/insert.php';
+
+  insertContact($_POST);
+  ?>
+
+
   送信が完了しました
 
   <!-- トークンの削除 -->
@@ -147,9 +155,9 @@ $token = $_SESSION['csrfToken'];
       </div>
     
   <div class="form-check form-check-inline">性別
-  <input class="form-check-input" id="gender1" type="radio" name="gender" value="male">
+  <input class="form-check-input" id="gender1" type="radio" name="gender" value="0">
   <label class="form-check-label" for="gender1">男性</label>
-  <input class="form-check-input" id="gender2" type="radio" name="gender" value="female">
+  <input class="form-check-input" id="gender2" type="radio" name="gender" value="1">
   <label class="form-check-label" for="gender2">女性</label>
   </div>
   
@@ -172,7 +180,7 @@ $token = $_SESSION['csrfToken'];
   </div>
   
   <div class="form-check">
-    <input class="form-check-input" type="checkbox" id="caution" value="1">注意事項のチェック
+    <input class="form-check-input" type="checkbox" id="caution" name="caution" value="1">注意事項のチェック
     <label class="form-check-label" for="caution">注意事項に同意する</label>
   </div>
   <input class="btn btn-info" type="submit" name="btn_confirm" value="確認する">
